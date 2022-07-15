@@ -41,12 +41,25 @@ class RecipeModelTest(RecipeTestBase):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(
             recipe.preparation_steps_is_html,
-            msg='This error raised because preparation_steps_is_html field is True. It must be False'
+            msg='This error raised because preparation_steps_is_html field is '
+                'True. It must be False'
         )
 
     def test_recipe_is_published_false_by_default(self):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(
             recipe.is_published,
-            msg='This error raised because is_published field is True. It must be False'
+            msg='This error raised because is_published field is True. It '
+                'must be False'
+        )
+
+    def test_recipe_string_representation(self):
+        needed = 'Testing Representation'
+        self.recipe.title = 'Testing Representation'
+        self.recipe.full_clean()
+        self.recipe.save()
+        self.assertEqual(
+            str(self.recipe), needed,
+            msg=f'Recipe string representation must be '
+                f'"{needed}" but "{str(self.recipe)}" was passed instead'
         )
